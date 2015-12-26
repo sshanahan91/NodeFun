@@ -19,7 +19,11 @@
     "mongoose": "^4.3.4"
   },
   "devDependencies": {
+    "chai": "^3.4.1",
     "mocha": "^2.3.4",
+    "nock": "^3.6.0",
+    "rewire": "^2.5.1",
+    "sinon": "^1.17.2",
     "supertest": "^1.1.0"
   },
   "author": "Stephen Shanahan <stephenshanahan91@gmail.com>",
