@@ -1,8 +1,7 @@
-var expect = require("chai").expect;
 //chai can use should, expect, and assert
-var tools = require("../libs/tools");
+var expect = require("chai").expect;
 // link to the file we want to test
-var nock = require("nock");
+var tools = require("../libs/tools");
 
 describe("Basic Example", function(){
   describe("printName()", function () {
@@ -28,8 +27,17 @@ describe("Polling Webpage", function() {
   });
 });
 
+//require nock, spoof a server
+var nock = require("nock");
+
+//require rewire, and then use it to spoof data
 var rewire = require("rewire");
 var rewiredTools = rewire("../libs/tools");
+
+//require sinon, and use it to fake a console log
+//note: uses rewire to add console.log
+var sinon = require("sinon");
+
 describe("Fake Data", function(){
   describe("loadWiki() with nock (fake server)", function(){
 
@@ -60,6 +68,31 @@ describe("Fake Data", function(){
       //the actual data from the file should return:
       //"nothing". mock data will return "something"
       expect(results).to.equal("something");
+      done();
+    });    
+  });
+  describe("using Sinon spies (console.log)", function(){
+    beforeEach(function(){
+      this.console = {
+        log: sinon.spy()
+      };
+      rewiredTools.__set__("console", this.console);
+    });
+
+
+    it("should order an item with 1 console log", function(done){
+      //keep the scope for this test
+      var _this = this;
+      var results = rewiredTools.orderItemWithLog()
+
+      //the actual data from the file should return:
+      //"nothing". mock data will return "something"
+      //NOTE: the beforeEach has carried over...even though
+      //  the data isnt referenced, the previous inventory
+      //  is still seen. the results would be "something"
+      //expect(results).to.equal("nothing");
+  
+      expect(_this.console.log.callCount).to.equal(1);
       done();
     });    
   });
