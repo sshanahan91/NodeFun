@@ -15,7 +15,7 @@ describe("Basic Example", function(){
 });
 
 describe("Polling Webpage", function() {
-  describe("loadWiki() real", function(){
+  describe("loadWiki()", function(){
     //to set a timeout for a test that takes more than 2 seconds:
     //this.timeout(5000);
 
@@ -26,8 +26,12 @@ describe("Polling Webpage", function() {
       });
     });
   });
-  
-  describe("loadWiki()", function(){
+});
+
+var rewire = require("rewire");
+var rewiredTools = rewire("../libs/tools");
+describe("Fake Data", function(){
+  describe("loadWiki() with nock (fake server)", function(){
 
     before(function(){
       //creating a fake webpage request:
@@ -42,5 +46,21 @@ describe("Polling Webpage", function() {
         done();
       });
     });
+  });
+  describe("using Rewire", function(){
+    beforeEach(function(){
+      this.testData = {title: "something", data: "123"};
+
+      rewiredTools.__set__("inventory", this.testData);
+    });
+
+    it("should order an item", function(done){
+      var results = rewiredTools.orderItem()
+
+      //the actual data from the file should return:
+      //"nothing". mock data will return "something"
+      expect(results).to.equal("something");
+      done();
+    });    
   });
 });

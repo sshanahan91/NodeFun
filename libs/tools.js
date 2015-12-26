@@ -1,5 +1,5 @@
 var https = require("https");
-
+var inventory = {title: "nothing", data: "none"};
 module.exports = {
   printName(person) {
     return `${person.last}, ${person.first}`;
@@ -19,5 +19,12 @@ module.exports = {
         callback(body);
       });
     });
-  }
+  },
+  orderItem(){
+    return inventory.title;
+  },
+  orderItemWithLog(){
+    console.log("Data that we don't want to log");
+    return inventory.title;
+  },  
 };
