@@ -117,14 +117,38 @@ describe("Fake Data", function(){
 
 var request = require("supertest");
 var app = rewire("../app");
+var cheerio = require("cheerio");
 describe("SuperTest", function(){
     beforeEach(function(){
+      this.terms = {
+        first:"test",
+        last: "user"
+      }
       this.console = {
         log: sinon.spy()
       };
       app.__set__("console", this.console);
     });
-  it("Load the homepage", function(done){
-    request(app).get("/").expect(200).end(done);
+  it("Load the api", function(done){
+    request(app).get("/api").expect(200).end(done);
   });
+  
+  it("Load the api page and confirm data", function(done){
+    var terms = this.terms;
+    request(app).get("/api").expect(200).end(function(err, res){
+      var data = JSON.parse(res.text);
+      expect(data).to.deep.equal(terms);
+      done();
+    });
+  });
+
+  it("Scrape the homepage (using cheerio)", function(done){
+    request(app).get("/").expect(200).end(function(err, res) {
+      var $ = cheerio.load(res.text);   
+      var pageHeading = $("body>h1").text();
+      expect(pageHeading).to.equal("Express");
+      done();
+    });
+  });
+
 });
