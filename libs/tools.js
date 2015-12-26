@@ -20,11 +20,18 @@ module.exports = {
       });
     });
   },
-  orderItem(){
+  orderItem(data){
     return inventory.title;
   },
   orderItemWithLog(){
     console.log("Data that we don't want to log");
     return inventory.title;
-  },  
+  },
+  // useCallback(data, complete){
+  //   var person = {};
+  //   newMethod(person, function(callback) {
+  //     complete(callback);
+  //   });
+  //   return inventory.title;
+  // }
 };

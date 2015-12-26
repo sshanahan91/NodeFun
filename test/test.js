@@ -96,4 +96,21 @@ describe("Fake Data", function(){
       done();
     });    
   });
+  // describe("using Sinon stubs (fake callback)", function(){
+  //   beforeEach(function(){
+  //     this.newMethod = sinon.stub().yields(6666);
+  //     this.callback = sinon.spy();
+  //     rewiredTools.__set__("newObject", this.enwMethod);
+  //     rewiredTools.useCallback({}, this.callback);
+  //   });
+
+
+  //   it("should order an item with 1 console log", function(done){
+  //     //keep the scope for this test
+  //     var _this = this;
+
+  //     expect(this.callback.calledWith(6666)).to.equal(true);
+  //     done();
+  //   });    
+  // });
 });
