@@ -114,3 +114,17 @@ describe("Fake Data", function(){
   //   });    
   // });
 });
+
+var request = require("supertest");
+var app = rewire("../app");
+describe("SuperTest", function(){
+    beforeEach(function(){
+      this.console = {
+        log: sinon.spy()
+      };
+      app.__set__("console", this.console);
+    });
+  it("Load the homepage", function(done){
+    request(app).get("/").expect(200).end(done);
+  });
+});
