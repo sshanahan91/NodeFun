@@ -21,10 +21,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.get('/api', function(req, res) {
-  terms = {first: "test", last:"user"};
-  res.json(terms);
-});
+// routes/recipes is the controller for all paths to export
+// app.use("/recipes", /*routes/recipes*/ )
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

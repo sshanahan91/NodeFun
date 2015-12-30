@@ -35,5 +35,10 @@ router.get('/showOne', function(req, res, next) {
   });
 });
 
+router.get('/api', function(req, res) {
+  terms = {first: "test", last:"user"};
+  res.json(terms);
+});
+
 
 module.exports = router;
